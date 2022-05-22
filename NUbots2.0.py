@@ -37,8 +37,8 @@ model.summary()
 #x_test_files = CustomImageGen.list_of_files("360cameraNUbotsField", None, CustomImageGen.list_of_folders_from_file(test_folders_file))
 
 # Uncomment for BlenderNUbotsField
-train_folders_file = ".\\BlenderRoboCupTrain31\\all_locations.txt"
-test_folders_file = ".\\FieldPositions56TestGrid\\all_locations.txt"
+train_folders_file = "./BlenderRoboCupTrain31/all_locations.txt"
+test_folders_file = "./FieldPositions56TestGrid/all_locations.txt"
 x_train_files = CustomImageGen.list_of_files("BlenderRoboCup", None, CustomImageGen.list_of_folders_from_file(train_folders_file))
 x_test_files = CustomImageGen.list_of_files("BlenderRoboCup", None, CustomImageGen.list_of_folders_from_file(test_folders_file))
 
@@ -48,7 +48,7 @@ batch_size = 4
 train_SPE = int(math.floor(len(x_train_files)/batch_size))
 test_SPE = int(math.floor(len(x_test_files)/batch_size))
 
-file1 = open(".\\Results\\Results.txt", "w")
+file1 = open("./Results/Results.txt", "w")
 mycallback = CustomImageGen.MyMetrics(CustomImageGen.image_generator(x_test_files, batch_size, is_random=False, is_noise=False), test_SPE, batch_size)
 results_train = model.fit(x=CustomImageGen.image_generator(x_train_files, batch_size, is_random=True, is_noise=False), steps_per_epoch=train_SPE, epochs=1, verbose=2, validation_data=CustomImageGen.image_generator(x_test_files, batch_size, False, False), validation_steps=test_SPE, validation_freq=1, callbacks=[mycallback])
 print(results_train.history)
@@ -97,7 +97,7 @@ for i in range(0,30):
         model.save_weights('my_weights_best_model_from25')
 
     epoch_counter += val_freq
-    file1 = open(".\\Results\\Results.txt", "a")
+    file1 = open("./Results/Results.txt", "a")
     file1.write("%s,%s,%s\n" % (epoch_counter, results_train.history["xyz_error"][0], mycallback.get_median()))
     file1.close()
     print("Best weights from 11 at: " + str(best_median10_i))

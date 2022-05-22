@@ -124,10 +124,10 @@ def list_of_folders(purpose,exclude):
     if purpose == "train":
         for i in range(49):
             if i+1 != exclude:
-                list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i+1).zfill(2) + "\\")
+                list.append("./360cameraNUbotsField/dataset4/" + str(i+1).zfill(2) + "/")
 
     else:
-        list.append(".\\360cameraNUbotsField\\dataset4\\" + str(exclude).zfill(2) + "\\")
+        list.append("./360cameraNUbotsField/dataset4/" + str(exclude).zfill(2) + "/")
     return list
 
 def list_of_folders2(purpose):
@@ -137,22 +137,22 @@ def list_of_folders2(purpose):
         i = 1
         for j in range(3):
             for k in range(7):
-                list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i).zfill(2) + "\\")
+                list.append("./360cameraNUbotsField/dataset4/" + str(i).zfill(2) + "/")
                 i += 1
 
             for k in range(4):
-                list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i).zfill(2) + "\\")
+                list.append("./360cameraNUbotsField/dataset4/" + str(i).zfill(2) + "/")
                 i += 2
             i -= 1
 
         for k in range(7):
-            list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i).zfill(2) + "\\")
+            list.append("./360cameraNUbotsField/dataset4/" + str(i).zfill(2) + "/")
             i += 1
     else:
         i = 9
         for j in range(3):
             for k in range(3):
-                list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i).zfill(2) + "\\")
+                list.append("./360cameraNUbotsField/dataset4/" + str(i).zfill(2) + "/")
                 i += 2
             i += 8
     return list
@@ -163,12 +163,12 @@ def list_of_folders3(purpose):
     if purpose == "train":
         for i in range(49):
             if (i+1 != 1) and (i+1 != 7) and (i+1 != 43) and (i+1 != 49):
-                list.append(".\\360cameraNUbotsField\\dataset4\\" + str(i + 1).zfill(2) + "\\")
+                list.append("./360cameraNUbotsField/dataset4/" + str(i + 1).zfill(2) + "/")
     else:
-        list.append(".\\360cameraNUbotsField\\dataset4\\01\\")
-        list.append(".\\360cameraNUbotsField\\dataset4\\07\\")
-        list.append(".\\360cameraNUbotsField\\dataset4\\43\\")
-        list.append(".\\360cameraNUbotsField\\dataset4\\49\\")
+        list.append("./360cameraNUbotsField/dataset4/01/")
+        list.append("./360cameraNUbotsField/dataset4/07/")
+        list.append("./360cameraNUbotsField/dataset4/43/")
+        list.append("./360cameraNUbotsField/dataset4/49/")
 
     return list
 
@@ -179,9 +179,9 @@ def list_of_folders_from_file(file):
 
 def list_of_files(dataset, purpose, folders):
     if dataset == "NUbots":
-        return [f for f in glob.glob(".\\NUbotsField\\"+purpose+"\\*\\*.jpg")]
+        return [f for f in glob.glob("./NUbotsField/"+purpose+"/*/*.jpg")]
     elif dataset == "7scenes":
-        return [f for f in glob.glob(".\\7scenes\\*\\" + purpose + "\\*\\*.color.png")]
+        return [f for f in glob.glob("./7scenes/*/" + purpose + "/*/*.color.png")]
     elif dataset == "360cameraNUbotsField":
         list = []
         for f in folders:
@@ -197,7 +197,7 @@ def list_of_files(dataset, purpose, folders):
     elif dataset == "BlenderRoboCup":
         list = []
         for f in folders:
-            for file in glob.glob(f+"\\*.png"):
+            for file in glob.glob(f+"/*.png"):
                 list.append(file)
         return list
     else:
@@ -236,11 +236,11 @@ def crop_generator(image, crop_length, isRandom):
 def get_input(path,is_noise):
     img_full = load_img(path)
 
-    if np.char.startswith(path, ".\\7scenes"):
+    if np.char.startswith(path, "./7scenes"):
         img_resized = img_full.resize((341, 256), Image.ANTIALIAS)
         img_np = img_to_array(img_resized)
         cropped_image = crop_generator(img_np, 224, isRandom=True)
-    elif np.char.startswith(path, ".\\NUbotsField"):
+    elif np.char.startswith(path, "./NUbotsField"):
         #scale = 1
         height = 224# / scale
         img_resized = img_full.resize((height,height), Image.ANTIALIAS)
@@ -307,7 +307,7 @@ def get_inputs(path,is_noise):
 
 
 def get_output(image_path):
-    if np.char.startswith(image_path, ".\\7scenes"):
+    if np.char.startswith(image_path, "./7scenes"):
         xyzq = np.zeros(7)
         pose_path = image_path[:-9] + "pose.txt"
         file_handle = open(pose_path, 'r')
@@ -330,7 +330,7 @@ def get_output(image_path):
         file_handle.close()
         return xyzq
 
-    elif np.char.startswith(image_path, ".\\NUbotsField"):
+    elif np.char.startswith(image_path, "./NUbotsField"):
         json_filename = image_path[:-3] + "json"
         xyzq = np.zeros(7)
 

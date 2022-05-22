@@ -39,7 +39,7 @@ def loadImages(dataset, data_purpose, scene_info):
         xyz = np.zeros((numImages, 3))
         q = np.zeros((numImages, 4))
         image_index = 0
-        path = ".\\NUbotsField\\{}\\".format(data_purpose)
+        path = "./NUbotsField/{}/".format(data_purpose)
         print(path)
         for r, d, f in os.walk(path):
             for file in f:

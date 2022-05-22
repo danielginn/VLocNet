@@ -18,14 +18,14 @@ model.summary()
 #####################################################################
 # Test
 # Uncomment for NUbotsField
-#x_test_files = CustomImageGen.list_of_files("NUbots","cropped\\16Locations-plus","nothing")
+#x_test_files = CustomImageGen.list_of_files("NUbots","cropped/16Locations-plus","nothing")
 
 # Uncomment for 360CameraNUbotsField
-#test_folders_file = ".\\360cameraNUbotsField\\dataset4\\33Locations.txt"
+#test_folders_file = "./360cameraNUbotsField/dataset4/33Locations.txt"
 #x_test_files = CustomImageGen.list_of_files("360cameraNUbotsField", None, CustomImageGen.list_of_folders_from_file(test_folders_file))
 
 # Uncomment for 360CameraNUbotsField
-test_folders_file = ".\\BlenderRoboCupPaths\\path5.txt"
+test_folders_file = "./BlenderRoboCupPaths/path5.txt"
 x_test_files = CustomImageGen.list_of_files("BlenderRoboCup", None, CustomImageGen.list_of_folders_from_file(test_folders_file))
 
 batch_size = 4
@@ -34,11 +34,11 @@ test_SPE = int(math.floor(len(x_test_files)/batch_size))
 mycallback = CustomImageGen.MyMetrics(CustomImageGen.image_generator(x_test_files, batch_size, is_random=False, is_noise=False), test_SPE, batch_size)
 
 model.evaluate(x=CustomImageGen.image_generator(x_test_files, batch_size, False, False), steps=test_SPE, callbacks=[mycallback])
-file1 = open(".\\Results\\Errors.txt", "w")
+file1 = open("./Results/Errors.txt", "w")
 errors = mycallback.get_all_errors()
 for e in errors:
     file1.write("%s\n" % (e))
 file1.close()
 
 predictions = model.predict(x=CustomImageGen.image_generator(x_test_files, batch_size, False, False), steps=test_SPE, verbose=1)
-np.savetxt(fname=".\\Results\\Predictions.txt", X=predictions, delimiter=",")
+np.savetxt(fname="./Results/Predictions.txt", X=predictions, delimiter=",")
